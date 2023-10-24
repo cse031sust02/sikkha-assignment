@@ -1,7 +1,6 @@
-# enrollments/urls.py
 from django.urls import path
-from .views import EnrollmentCreateView
+from . import views
 
 urlpatterns = [
-    path('enrollments/', EnrollmentCreateView.as_view(), name='enrollment-create'),
+    path('enrollments/', views.enroll_student, name='enroll_student'),
 ]
