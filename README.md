@@ -7,6 +7,7 @@ This is the the backend system for an online learning platform.
 ## Table of Contents
 
 - [Installation](#installation)
+- [Usage](#usage)
 - [API Endpoints](#api-endpoints)
 
 ## Installation
@@ -22,6 +23,17 @@ This project is dockerized. You can run the application using the following comm
 
 ```bash
 docker-compose up
+```
+
+## Usage
+
+You can utilize the API endpoints to manage courses and enrollments. Additionally, you can access the [Admin Panel](http://localhost:8000/admin/) to view courses and enrollments.
+
+```
+{
+  "Username" : "admin@admin.com",
+  "Password" : "admin"
+}
 ```
 
 ## API Endpoints
