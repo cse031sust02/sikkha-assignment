@@ -1,20 +1,22 @@
-# enrollments/services.py
 from .models import Enrollment
 from courses.models import Course
+from django.http import Http404
 
 class EnrollmentService:
     @staticmethod
-    def enroll_student(student_name, course_id, enrollment_date):
-        return Enrollment.objects.create(student_name=student_name, course_id=course_id, enrollment_date=enrollment_date)
+    def enroll_student(student_name, course, enrollment_date):
+        return Enrollment.objects.create(student_name=student_name, course=course, enrollment_date=enrollment_date)
 
     @staticmethod
-    def validate_enrollment(student_name, course_id):
+    def get_enrollments():
+        return Enrollment.objects.all()
+    
+    @staticmethod
+    def validate_enrollment(student_name, course):
         try:
-            course = Course.objects.get(id=course_id)
-            # Additional validation logic can be added here
             if student_name and course:
                 return True
             else:
                 return False
         except Course.DoesNotExist:
-            return False
+            raise Http404("The course does not exist")
