@@ -44,6 +44,11 @@ You can utilize the API endpoints to manage courses and enrollments. Additionall
 - `GET /courses/<id>`: Retrieve a specific course by its ID.
 - `POST /courses`: Create a new course.
 
+```
+Note : you can use query filter in course list to filtering courses by different properties like Instructor, Price,
+or Duration.
+Example : /courses?duration=60
+```
 
 ### Enrollments API
 
