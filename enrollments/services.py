@@ -13,6 +13,7 @@ class EnrollmentService:
     
     @staticmethod
     def validate_enrollment(student_name, course):
+        # TODO : I am not fully sure on business requirements for validation
         try:
             if student_name and course:
                 return True
