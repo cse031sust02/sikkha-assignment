@@ -5,28 +5,28 @@ from rest_framework import generics
 from .services import CourseService
 from .serializers import CourseSerializer
 
+class CourseListCreateAPIView(generics.ListCreateAPIView):
+    serializer_class = CourseSerializer
 
-class CourseListCreateAPIView(APIView):
-    def get(self, request, format=None):
-        courses = CourseService.get_courses()
-        serializer = CourseSerializer(courses, many=True)
-        return Response(serializer.data)
+    def get_queryset(self):
+        queryset = CourseService.get_courses()
+        instructor = self.request.query_params.get('instructor', None)
+        price = self.request.query_params.get('price', None)
+        duration = self.request.query_params.get('duration', None)
 
-    def post(self, request, format=None):
-        serializer = CourseSerializer(data=request.data)
-        if serializer.is_valid():
-            title = serializer.validated_data['title']
-            description = serializer.validated_data['description']
-            instructor = serializer.validated_data['instructor']
-            duration = serializer.validated_data['duration']
-            price = serializer.validated_data['price']
+        if instructor:
+            queryset = queryset.filter(instructor__icontains=instructor)
+        if price:
+            queryset = queryset.filter(price=price)
+        if duration:
+            queryset = queryset.filter(duration=duration)
 
-            course = CourseService.create_course(
-                title, description, instructor, duration, price)
+        return queryset
 
-            response_serializer = CourseSerializer(course)
-            return Response(response_serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, *args, **kwargs):
+        # Implementation for creating a new course
+        # Add your logic here
+        return super().post(request, *args, **kwargs)
 
 
 class CourseDetailAPIView(generics.RetrieveAPIView):
